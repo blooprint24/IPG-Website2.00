@@ -583,7 +583,7 @@
                             <div style="display: flex; gap: 1rem; margin-top: 1rem;">
                                 <div style="flex: 1;">
                                     <span style="font-size: 0.7rem; display: block;">Friction Loss</span>
-                                    <span style="color: #ff4d4d; font-size: 1.2rem;">$3,000/mo</span>
+                                    <span style="color: #ff4d4d; font-size: 1.2rem;" id="count-friction-loss">$0</span>
                                 </div>
                                 <div style="flex: 1;">
                                     <span style="font-size: 0.7rem; display: block;">PDS Utility</span>
@@ -768,7 +768,8 @@
             daily: 150,
             monthly: 3000,
             annual: 36000,
-            pds: 147
+            pds: 147,
+            friction: 3000
         };
 
         function updateCounts() {
@@ -781,6 +782,9 @@
             if (document.getElementById('count-pds')) {
                 document.getElementById('count-pds').innerText = '$' + Math.floor(countValues.pds);
             }
+            if (document.getElementById('count-friction-loss')) {
+                document.getElementById('count-friction-loss').innerText = '$' + Math.floor(countValues.friction).toLocaleString() + '/mo';
+            }
         }
 
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -791,7 +795,7 @@
                     toggleActions: 'play none none none',
                     onEnter: () => {
                         // Reset to 0 before starting count
-                        Object.assign(countValues, { missed: 0, sale: 0, win: 0, daily: 0, monthly: 0, annual: 0, pds: 0 });
+                        Object.assign(countValues, { missed: 0, sale: 0, win: 0, daily: 0, monthly: 0, annual: 0, pds: 0, friction: 0 });
                         gsap.to(countValues, {
                             missed: targets.missed,
                             sale: targets.sale,
@@ -800,8 +804,9 @@
                             monthly: targets.monthly,
                             annual: targets.annual,
                             pds: targets.pds,
-                            duration: 2,
-                            ease: 'power2.out',
+                            friction: targets.friction,
+                            duration: 2.5, /* Slightly longer for more "spinning" effect */
+                            ease: 'power3.out',
                             onUpdate: updateCounts
                         });
                     }
