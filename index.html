@@ -325,7 +325,31 @@
         /* Mobile Adjustments */
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                height: calc(100vh - var(--header-height));
+                background: var(--bg-dark);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 4rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+                z-index: 99;
+                display: flex;
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                margin-bottom: 2rem;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
             }
 
             .hamburger {
@@ -675,6 +699,25 @@
 
     <!-- JavaScript -->
     <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinksGroup = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        hamburger.addEventListener('click', () => {
+            navLinksGroup.classList.toggle('active');
+            // Animate hamburger icon (optional but nice)
+            hamburger.style.transform = navLinksGroup.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0deg)';
+        });
+
+        // Close menu when a link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksGroup.classList.remove('active');
+                hamburger.style.transform = 'rotate(0deg)';
+            });
+        });
+
         // GSAP Initialization
         gsap.registerPlugin(ScrollTrigger);
 
