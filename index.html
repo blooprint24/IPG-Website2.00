@@ -305,6 +305,16 @@
             transform: translateY(-10px);
         }
 
+        .card-pain:hover {
+            border-color: #ff4d4d !important;
+            box-shadow: 0 0 30px rgba(255, 77, 77, 0.2);
+        }
+
+        .card-relief:hover {
+            border-color: var(--growth-green) !important;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+        }
+
         /* Mobile Adjustments */
         @media (max-width: 768px) {
             .nav-links {
@@ -440,27 +450,27 @@
             <div class="container">
                 <h2 style="text-align: center; margin-bottom: 4rem;">What Friction Looks Like</h2>
                 <div class="grid-roi">
-                    <div class="roi-card">
+                    <div class="roi-card card-pain">
                         <h3>Visibility Friction</h3>
                         <p>No trust online. If they can't see you, they can't choose you.</p>
                     </div>
-                    <div class="roi-card">
+                    <div class="roi-card card-pain">
                         <h3>Contact Friction</h3>
                         <p>Missed calls. Slow replies. Every silent phone is a lost sale.</p>
                     </div>
-                    <div class="roi-card">
+                    <div class="roi-card card-pain">
                         <h3>Conversion Friction</h3>
                         <p>No follow-up. Leaking leads through simple human error.</p>
                     </div>
-                    <div class="roi-card">
+                    <div class="roi-card card-pain">
                         <h3>Time Friction</h3>
                         <p>Everything depends on you. You're the bottleneck in your own growth.</p>
                     </div>
-                    <div class="roi-card">
+                    <div class="roi-card card-pain">
                         <h3>Data Friction</h3>
                         <p>Guessing. No clarity on what's actually working.</p>
                     </div>
-                    <div class="roi-card">
+                    <div class="roi-card card-pain">
                         <h3>Money Friction</h3>
                         <p>Inconsistent revenue is a symptom of a broken system.</p>
                     </div>
@@ -473,7 +483,7 @@
             <div class="container">
                 <h2 style="text-align: center; margin-bottom: 4rem;">The A-B-C Simple Solution</h2>
                 <div class="grid-roi">
-                    <div class="roi-card">
+                    <div class="roi-card card-relief">
                         <h3>A) Structure</h3>
                         <p>Trust + Legitimacy. We build the foundation your customers expect to see.</p>
                         <ul style="list-style: none; margin-top: 1rem; color: var(--text-dim);">
@@ -481,7 +491,7 @@
                             <li>✓ Modern Standards</li>
                         </ul>
                     </div>
-                    <div class="roi-card">
+                    <div class="roi-card card-relief">
                         <h3>B) Function</h3>
                         <p>Capture + Automation. Stop chasing leads. Let the system catch them for you.</p>
                         <ul style="list-style: none; margin-top: 1rem; color: var(--text-dim);">
@@ -489,7 +499,7 @@
                             <li>✓ Auto-Scheduling</li>
                         </ul>
                     </div>
-                    <div class="roi-card">
+                    <div class="roi-card card-relief">
                         <h3>C) Data</h3>
                         <p>Visibility + Smarter Decisions. See clearly for the first time.</p>
                         <ul style="list-style: none; margin-top: 1rem; color: var(--text-dim);">
@@ -570,7 +580,8 @@
                                 </div>
                                 <div style="flex: 1;">
                                     <span style="font-size: 0.7rem; display: block;">PDS Utility</span>
-                                    <span style="color: var(--growth-green); font-size: 1.2rem;">$147/mo</span>
+                                    <span style="color: var(--growth-green); font-size: 1.2rem;"
+                                        id="count-pds">$0</span>
                                 </div>
                             </div>
                         </div>
@@ -766,22 +777,22 @@
         }
 
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            ScrollTrigger.create({
-                trigger: '#roi',
-                start: 'top 60%',
-                onEnter: () => {
-                    gsap.to(countValues, {
-                        missed: targets.missed,
-                        sale: targets.sale,
-                        win: targets.win,
-                        daily: targets.daily,
-                        monthly: targets.monthly,
-                        annual: targets.annual,
-                        duration: 2,
-                        ease: 'power2.out',
-                        onUpdate: updateCounts
-                    });
-                }
+            gsap.to(countValues, {
+                scrollTrigger: {
+                    trigger: '#roi',
+                    start: 'top 85%',
+                    once: true
+                },
+                missed: targets.missed,
+                sale: targets.sale,
+                win: targets.win,
+                daily: targets.daily,
+                monthly: targets.monthly,
+                annual: targets.annual,
+                pds: targets.pds,
+                duration: 2,
+                ease: 'power2.out',
+                onUpdate: updateCounts
             });
         } else {
             // If reduced motion, just show the final numbers
