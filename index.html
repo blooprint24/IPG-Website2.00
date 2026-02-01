@@ -177,6 +177,7 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
+            padding: 0 1rem;
         }
 
         .logo {
@@ -188,6 +189,8 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            margin-right: 2rem;
+            /* Ensure space from menu */
         }
 
         .nav-links {
@@ -785,18 +788,24 @@
                 scrollTrigger: {
                     trigger: '#roi',
                     start: 'top 85%',
-                    once: true
-                },
-                missed: targets.missed,
-                sale: targets.sale,
-                win: targets.win,
-                daily: targets.daily,
-                monthly: targets.monthly,
-                annual: targets.annual,
-                pds: targets.pds,
-                duration: 2,
-                ease: 'power2.out',
-                onUpdate: updateCounts
+                    toggleActions: 'play none none none',
+                    onEnter: () => {
+                        // Reset to 0 before starting count
+                        Object.assign(countValues, { missed: 0, sale: 0, win: 0, daily: 0, monthly: 0, annual: 0, pds: 0 });
+                        gsap.to(countValues, {
+                            missed: targets.missed,
+                            sale: targets.sale,
+                            win: targets.win,
+                            daily: targets.daily,
+                            monthly: targets.monthly,
+                            annual: targets.annual,
+                            pds: targets.pds,
+                            duration: 2,
+                            ease: 'power2.out',
+                            onUpdate: updateCounts
+                        });
+                    }
+                }
             });
         } else {
             // If reduced motion, just show the final numbers
