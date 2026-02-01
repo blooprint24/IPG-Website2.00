@@ -305,14 +305,18 @@
             transform: translateY(-10px);
         }
 
-        .card-pain:hover {
+        .card-pain:hover,
+        .card-pain.active {
             border-color: #ff4d4d !important;
             box-shadow: 0 0 30px rgba(255, 77, 77, 0.2);
+            transform: translateY(-5px);
         }
 
-        .card-relief:hover {
+        .card-relief:hover,
+        .card-relief.active {
             border-color: var(--growth-green) !important;
             box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+            transform: translateY(-5px);
         }
 
         /* Mobile Adjustments */
@@ -812,6 +816,19 @@
                 duration: 0.8,
                 ease: 'power2.out'
             });
+
+            // Mobile Glow Trigger
+            if (el.classList.contains('roi-card')) {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 60%',
+                    end: 'bottom 40%',
+                    onEnter: () => el.classList.add('active'),
+                    onEnterBack: () => el.classList.add('active'),
+                    onLeave: () => el.classList.remove('active'),
+                    onLeaveBack: () => el.classList.remove('active')
+                });
+            }
         });
 
         // Sticky Button Visibility
