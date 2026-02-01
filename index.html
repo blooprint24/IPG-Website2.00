@@ -27,10 +27,10 @@
             --mid-blue: #112240;
             --light-blue: #1E3A8A;
             /* Slightly more vibrant blue */
-            --growth-green: #10B981;
-            /* Premium Emerald/Growth Green */
-            --growth-green-soft: rgba(16, 185, 129, 0.1);
-            --growth-green-bright: #34D399;
+            --growth-green: #409E1A;
+            /* Logo Matched Green */
+            --growth-green-soft: rgba(64, 158, 26, 0.1);
+            --growth-green-bright: #52B527;
             --text-main: #E2E8F0;
             --text-dim: #94A3B8;
             --white: #FFFFFF;
@@ -725,7 +725,7 @@
 
         function animateCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#10B981';
+            ctx.fillStyle = '#409E1A';
             particles.forEach(p => {
                 p.x += p.vx;
                 p.y += p.vy;
