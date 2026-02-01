@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Ideal Performance Group | Remove the Friction That Slows Business Down</title>
+    <meta name="description"
+        content="Ideal Performance Group (IPG) installs Performance Data Systems (PDS) to remove friction, recover revenue, and automate growth for business owners.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+    <style>
+        :root {
+            /* Color Palette */
+            --deep-blue: #0A192F;
+            --mid-blue: #112240;
+            --light-blue: #233554;
+            --growth-green: #64FFDA;
+            --growth-green-soft: rgba(100, 255, 218, 0.1);
+            --text-main: #CCD6F6;
+            --text-dim: #8892B0;
+            --white: #FFFFFF;
+            --bg-dark: #020C1B;
+
+            /* Glassmorphism */
+            --glass-bg: rgba(17, 34, 64, 0.7);
+            --glass-border: rgba(100, 255, 218, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(2, 12, 27, 0.37);
+
+            /* Typography */
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* Sizing */
+            --header-height: 80px;
+            --container-max: 1200px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: initial;
+            /* GSAP handles this better */
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
+        }
+
+        /* Data Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-heading);
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-dim);
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: var(--growth-green);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease-out;
+            display: none;
+            /* Desktop only via JS */
+        }
+
+        #cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--growth-green);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.3;
+            transition: transform 0.15s ease-out;
+            display: none;
+            /* Desktop only via JS */
+        }
+
+        /* Header & Nav */
+        header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(2, 12, 27, 0.8);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--growth-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--growth-green);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+            z-index: 101;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: var(--font-heading);
+            cursor: pointer;
+            min-height: 44px;
+        }
+
+        .btn-primary {
+            background: var(--growth-green);
+            color: var(--bg-dark);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -10px var(--growth-green);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--growth-green);
+            border: 1px solid var(--growth-green);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--growth-green-soft);
+            transform: translateY(-3px);
+        }
+
+        /* Sections */
+        section {
+            padding: 10rem 0;
+            position: relative;
+        }
+
+        /* Hero */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: var(--header-height);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-tagline {
+            color: var(--growth-green);
+            font-family: var(--font-heading);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ROI Section */
+        #roi {
+            background: rgba(17, 34, 64, 0.3);
+        }
+
+        .grid-roi {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .roi-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 2.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .roi-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .grid-roi {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            section {
+                padding: 5rem 0;
+            }
+        }
+
+        /* Sticky CTAs (Mobile) */
+        .mobile-cta-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--mid-blue);
+            display: none;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--growth-green);
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-cta-bar {
+                display: grid;
+            }
+        }
+
+        .mobile-cta-item {
+            padding: 1rem;
+            text-align: center;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            border-right: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        /* Sticky Book Button */
+        #sticky-book-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99;
+            transform: translateY(-200%);
+            transition: transform 0.5s ease;
+        }
+
+        #sticky-book-btn.visible {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <header id="site-header">
+        <div class="container nav-container">
+            <nav>
+                <a href="#" class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                    IPG
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#recognition">The Problem</a></li>
+                    <li><a href="#friction">Friction</a></li>
+                    <li><a href="#abc">How It Works</a></li>
+                    <li><a href="#roi">ROI</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="hamburger" aria-label="Menu">
+                    <svg width="24" height="24" fill="none" stroke="var(--growth-green)" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <a href="#contact" class="btn btn-primary" id="sticky-book-btn">Book a Call</a>
+
+    <main>
+        <!-- Section 1: Hero -->
+        <section id="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <p class="hero-tagline">Stop Losing Money Quietly</p>
+                    <h1>We Remove the Friction That Slows Businesses Down.</h1>
+                    <p>Business didn’t get harder. It got faster. We install a Performance Data System (PDS) so your
+                        business can keep up.</p>
+                    <div class="hero-btns">
+                        <a href="#abc" class="btn btn-primary">See How It Works</a>
+                        <a href="#contact" class="btn btn-secondary">Try It for 15 Days</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Recognition -->
+        <section id="recognition">
+            <div class="container">
+                <div class="text-center" style="max-width: 700px; margin: 0 auto; text-align: center;">
+                    <h2>Most businesses didn't get harder. They just got slower than their customers.</h2>
+                    <p>You already Google businesses. You expect a website. You expect quick responses. Your customers
+                        expect the same from you.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Friction Cards -->
+        <section id="friction">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 4rem;">What Friction Looks Like</h2>
+                <div class="grid-roi">
+                    <div class="roi-card">
+                        <h3>Visibility Friction</h3>
+                        <p>No trust online. If they can't see you, they can't choose you.</p>
+                    </div>
+                    <div class="roi-card">
+                        <h3>Contact Friction</h3>
+                        <p>Missed calls. Slow replies. Every silent phone is a lost sale.</p>
+                    </div>
+                    <div class="roi-card">
+                        <h3>Conversion Friction</h3>
+                        <p>No follow-up. Leaking leads through simple human error.</p>
+                    </div>
+                    <div class="roi-card">
+                        <h3>Time Friction</h3>
+                        <p>Everything depends on you. You're the bottleneck in your own growth.</p>
+                    </div>
+                    <div class="roi-card">
+                        <h3>Data Friction</h3>
+                        <p>Guessing. No clarity on what's actually working.</p>
+                    </div>
+                    <div class="roi-card">
+                        <h3>Money Friction</h3>
+                        <p>Inconsistent revenue is a symptom of a broken system.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: ABC Solution -->
+        <section id="abc">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 4rem;">The A-B-C Simple Solution</h2>
+                <div class="grid-roi">
+                    <div class="roi-card">
+                        <h3>A) Structure</h3>
+                        <p>Trust + Legitimacy. We build the foundation your customers expect to see.</p>
+                        <ul style="list-style: none; margin-top: 1rem; color: var(--text-dim);">
+                            <li>✓ Professional Presence</li>
+                            <li>✓ Modern Standards</li>
+                        </ul>
+                    </div>
+                    <div class="roi-card">
+                        <h3>B) Function</h3>
+                        <p>Capture + Automation. Stop chasing leads. Let the system catch them for you.</p>
+                        <ul style="list-style: none; margin-top: 1rem; color: var(--text-dim);">
+                            <li>✓ 24/7 Response</li>
+                            <li>✓ Auto-Scheduling</li>
+                        </ul>
+                    </div>
+                    <div class="roi-card">
+                        <h3>C) Data</h3>
+                        <p>Visibility + Smarter Decisions. See clearly for the first time.</p>
+                        <ul style="list-style: none; margin-top: 1rem; color: var(--text-dim);">
+                            <li>✓ Real-time Tracking</li>
+                            <li>✓ ROI Visibility</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: ROI Snapshot (Dashboard Style) -->
+        <section id="roi">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 4rem;">ROI Snapshot</h2>
+                <div class="grid-roi">
+                    <!-- Left Column -->
+                    <div class="roi-col">
+                        <div class="roi-card" style="margin-bottom: 2rem;">
+                            <h4>The Silent Leak</h4>
+                            <p>Most businesses lose money quietly through missed calls.</p>
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <div style="flex: 1; text-align: center; border-right: 1px solid var(--glass-border);">
+                                    <span style="display: block; font-size: 1.5rem; color: var(--growth-green);"
+                                        id="count-missed">0</span>
+                                    <span style="font-size: 0.7rem;">Missed/Day</span>
+                                </div>
+                                <div style="flex: 1; text-align: center; border-right: 1px solid var(--glass-border);">
+                                    <span style="display: block; font-size: 1.5rem; color: var(--growth-green);"
+                                        id="count-sale">$0</span>
+                                    <span style="font-size: 0.7rem;">Avg Sale</span>
+                                </div>
+                                <div style="flex: 1; text-align: center;">
+                                    <span style="display: block; font-size: 1.5rem; color: var(--growth-green);"
+                                        id="count-win">0</span>
+                                    <span style="font-size: 0.7rem;">Win/Day</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="roi-card">
+                            <h4>What That Costs</h4>
+                            <div style="margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Daily Loss</span>
+                                    <span style="color: var(--growth-green);" id="count-daily">$0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Monthly Loss</span>
+                                    <span style="color: var(--growth-green);" id="count-monthly">$0</span>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; font-weight: bold; border-top: 1px solid var(--glass-border); padding-top: 0.5rem;">
+                                    <span>Annual Loss</span>
+                                    <span style="color: var(--growth-green);" id="count-annual">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Column -->
+                    <div class="roi-col">
+                        <div class="roi-card" style="margin-bottom: 2rem; border-color: var(--growth-green);">
+                            <h4>What PDS Changes</h4>
+                            <ul style="list-style: none; margin-top: 1rem;">
+                                <li style="margin-bottom: 0.5rem;">✓ Instant Follow-up</li>
+                                <li style="margin-bottom: 0.5rem;">✓ After-hours Coverage</li>
+                                <li style="margin-bottom: 0.5rem;">✓ Auto-Booking</li>
+                                <li>✓ Zero Leakage</li>
+                            </ul>
+                            <p style="margin-top: 1.5rem; font-weight: bold; color: var(--white);">You're recovering
+                                money you're already losing.</p>
+                        </div>
+                        <div class="roi-card">
+                            <h4>Cost vs Recovery</h4>
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <div style="flex: 1;">
+                                    <span style="font-size: 0.7rem; display: block;">Friction Loss</span>
+                                    <span style="color: #ff4d4d; font-size: 1.2rem;">$3,000/mo</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <span style="font-size: 0.7rem; display: block;">PDS Utility</span>
+                                    <span style="color: var(--growth-green); font-size: 1.2rem;">$67/mo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Risk Reversal -->
+        <section id="try-it">
+            <div class="container" style="text-align: center;">
+                <div class="roi-card" style="max-width: 600px; margin: 0 auto;">
+                    <h2>Try It for 15 Days</h2>
+                    <p>$67 setup. We install the system. Run it for 15 days. If it doesn't help, you walk away. No
+                        pressure.</p>
+                    <a href="#contact" class="btn btn-primary">Try It Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Final CTA -->
+        <section id="contact">
+            <div class="container">
+                <div class="grid-roi">
+                    <div>
+                        <h2>Install Your PDS</h2>
+                        <p>Speak to us today about removing the friction from your business. No hype, just performance.
+                        </p>
+                    </div>
+                    <div class="roi-card">
+                        <form id="pds-form">
+                            <div style="margin-bottom: 1rem;">
+                                <input type="text" placeholder="Name"
+                                    style="width: 100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--glass-border); border-radius: 4px; color: white;">
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <input type="email" placeholder="Email"
+                                    style="width: 100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--glass-border); border-radius: 4px; color: white;">
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <input type="tel" placeholder="Phone"
+                                    style="width: 100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--glass-border); border-radius: 4px; color: white;">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Install My PDS</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="mobile-cta-bar">
+        <a href="tel:1234567890" class="mobile-cta-item">Call</a>
+        <a href="#contact" class="mobile-cta-item">Book Call</a>
+        <a href="#try-it" class="mobile-cta-item">Try 15 Days</a>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // GSAP Initialization
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('custom-cursor');
+        const follower = document.getElementById('cursor-follower');
+
+        if (window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            cursor.style.display = 'block';
+            follower.style.display = 'block';
+
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+                gsap.to(follower, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.3 });
+            });
+
+            document.querySelectorAll('a, button, .roi-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    follower.style.transform = 'scale(1.5)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    follower.style.transform = 'scale(1)';
+                });
+            });
+        }
+
+        // Background Animation (Simple Canvas Particles)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 50; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2
+                });
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#64FFDA';
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        initCanvas();
+        animateCanvas();
+        window.addEventListener('resize', initCanvas);
+
+        // Scroll Animations
+        gsap.from('.hero-content > *', {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: 'power4.out'
+        });
+
+        // ROI Number Count-up
+        const countValues = {
+            missed: 0,
+            sale: 0,
+            win: 0,
+            daily: 0,
+            monthly: 0,
+            annual: 0
+        };
+
+        const targets = {
+            missed: 3,
+            sale: 150,
+            win: 1,
+            daily: 150,
+            monthly: 3000,
+            annual: 36000
+        };
+
+        function updateCounts() {
+            document.getElementById('count-missed').innerText = Math.floor(countValues.missed);
+            document.getElementById('count-sale').innerText = '$' + Math.floor(countValues.sale);
+            document.getElementById('count-win').innerText = Math.floor(countValues.win);
+            document.getElementById('count-daily').innerText = '$' + Math.floor(countValues.daily).toLocaleString();
+            document.getElementById('count-monthly').innerText = '$' + Math.floor(countValues.monthly).toLocaleString();
+            document.getElementById('count-annual').innerText = '$' + Math.floor(countValues.annual).toLocaleString();
+        }
+
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            ScrollTrigger.create({
+                trigger: '#roi',
+                start: 'top 60%',
+                onEnter: () => {
+                    gsap.to(countValues, {
+                        missed: targets.missed,
+                        sale: targets.sale,
+                        win: targets.win,
+                        daily: targets.daily,
+                        monthly: targets.monthly,
+                        annual: targets.annual,
+                        duration: 2,
+                        ease: 'power2.out',
+                        onUpdate: updateCounts
+                    });
+                }
+            });
+        } else {
+            // If reduced motion, just show the final numbers
+            Object.assign(countValues, targets);
+            updateCounts();
+        }
+
+        gsap.utils.toArray('section h2, .roi-card').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        });
+
+        // Sticky Button Visibility
+        ScrollTrigger.create({
+            trigger: '#hero',
+            start: 'bottom 10%',
+            onEnter: () => document.getElementById('sticky-book-btn').classList.add('visible'),
+            onLeaveBack: () => document.getElementById('sticky-book-btn').classList.remove('visible')
+        });
+
+    </script>
+
+    <!-- RESPONSIVE QA CHECKLIST
+    - [ ] 320px (iPhone SE)
+    - [ ] 375px (iPhone X)
+    - [ ] 414px (iPhone 8 Plus)
+    - [ ] 768px (Tablet)
+    - [ ] 1024px (Laptop)
+    - [ ] 1440px (Desktop)
+    - [ ] Horizontal overflow check
+    - [ ] Tap targets 44px+
+    - [ ] Contrast check (AA/AAA)
+    - [ ] GSAP animations smooth
+    - [ ] Custom cursor disabled on mobile
+    -->
+</body>
+
+</html>
