@@ -22,31 +22,35 @@
 
     <style>
         :root {
-            /* Color Palette */
+            /* Color Palette - Refined for IPG Logo */
             --deep-blue: #0A192F;
             --mid-blue: #112240;
-            --light-blue: #233554;
-            --growth-green: #64FFDA;
-            --growth-green-soft: rgba(100, 255, 218, 0.1);
-            --text-main: #CCD6F6;
-            --text-dim: #8892B0;
+            --light-blue: #1E3A8A;
+            /* Slightly more vibrant blue */
+            --growth-green: #10B981;
+            /* Premium Emerald/Growth Green */
+            --growth-green-soft: rgba(16, 185, 129, 0.1);
+            --growth-green-bright: #34D399;
+            --text-main: #E2E8F0;
+            --text-dim: #94A3B8;
             --white: #FFFFFF;
-            --bg-dark: #020C1B;
+            --bg-dark: #020617;
+            /* Deeper slate dark */
 
             /* Glassmorphism */
-            --glass-bg: rgba(17, 34, 64, 0.7);
-            --glass-border: rgba(100, 255, 218, 0.1);
-            --glass-shadow: 0 8px 32px 0 rgba(2, 12, 27, 0.37);
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --glass-border: rgba(16, 185, 129, 0.15);
+            --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
 
             /* Typography */
             --font-heading: 'Outfit', sans-serif;
             --font-body: 'Inter', sans-serif;
 
             /* Sizing */
-            --header-height: 80px;
+            --header-height: 90px;
             --container-max: 1200px;
-            --radius-lg: 24px;
-            --radius-md: 16px;
+            --radius-lg: 32px;
+            --radius-md: 20px;
         }
 
         /* Base Styles */
@@ -703,7 +707,7 @@
 
         function animateCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#64FFDA';
+            ctx.fillStyle = '#10B981';
             particles.forEach(p => {
                 p.x += p.vx;
                 p.y += p.vy;
