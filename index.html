@@ -569,7 +569,7 @@
                                 </div>
                                 <div style="flex: 1;">
                                     <span style="font-size: 0.7rem; display: block;">PDS Utility</span>
-                                    <span style="color: var(--growth-green); font-size: 1.2rem;">$67/mo</span>
+                                    <span style="color: var(--growth-green); font-size: 1.2rem;">$147/mo</span>
                                 </div>
                             </div>
                         </div>
@@ -581,11 +581,33 @@
         <!-- Section 6: Risk Reversal -->
         <section id="try-it">
             <div class="container" style="text-align: center;">
-                <div class="roi-card" style="max-width: 600px; margin: 0 auto;">
-                    <h2>Try It for 15 Days</h2>
-                    <p>$67 setup. We install the system. Run it for 15 days. If it doesn't help, you walk away. No
-                        pressure.</p>
-                    <a href="#contact" class="btn btn-primary">Try It Now</a>
+                <div class="roi-card" style="max-width: 800px; margin: 0 auto;">
+                    <h2>Try the System for 15 Days</h2>
+                    <p style="font-size: 1.2rem; color: var(--white); margin-bottom: 2rem;">Pay only the <strong>$67
+                            setup fee</strong> to start. No monthly bill for 15 days.</p>
+
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; margin-bottom: 2rem;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                            <h4 style="color: var(--growth-green); margin-bottom: 0.5rem;">The Setup Includes:</h4>
+                            <ul style="list-style: none; font-size: 0.9rem;">
+                                <li>✓ Professional Website</li>
+                                <li>✓ Business Phone Number (Listed in 411)</li>
+                                <li>✓ Website Chat Assistant</li>
+                                <li>✓ AI Agent to Answer Your Phone</li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                            <h4 style="color: var(--growth-green); margin-bottom: 0.5rem;">The "Walk Away" Guarantee:
+                            </h4>
+                            <p style="font-size: 0.9rem; margin-bottom: 0;">If you don't love it after 15 days, cancel
+                                the PDS functions. You keep the website, CRM, and phone number for just $67/mo (hosting
+                                & maintenance).</p>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.5rem 3rem;">Start
+                        for $67</a>
                 </div>
             </div>
         </section>
@@ -721,7 +743,8 @@
             win: 1,
             daily: 150,
             monthly: 3000,
-            annual: 36000
+            annual: 36000,
+            pds: 147
         };
 
         function updateCounts() {
@@ -731,6 +754,9 @@
             document.getElementById('count-daily').innerText = '$' + Math.floor(countValues.daily).toLocaleString();
             document.getElementById('count-monthly').innerText = '$' + Math.floor(countValues.monthly).toLocaleString();
             document.getElementById('count-annual').innerText = '$' + Math.floor(countValues.annual).toLocaleString();
+            if (document.getElementById('count-pds')) {
+                document.getElementById('count-pds').innerText = '$' + Math.floor(countValues.pds);
+            }
         }
 
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
