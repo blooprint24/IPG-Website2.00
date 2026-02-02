@@ -64,7 +64,6 @@
             scroll-behavior: initial;
             /* GSAP handles this better */
             background-color: var(--bg-dark);
-            overflow-x: hidden;
         }
 
         body {
@@ -166,19 +165,20 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000;
-            /* Increased to stay above everything */
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2000;
+            /* Extremely high to stay above everything */
+            transition: height 0.3s ease, background 0.3s ease;
             backdrop-filter: blur(10px);
-            background: rgba(2, 12, 27, 0.8);
+            background: rgba(2, 12, 27, 0.82);
             border-bottom: 1px solid transparent;
+            will-change: transform, height;
         }
 
         header.scrolled {
             height: 70px;
-            background: rgba(2, 12, 27, 0.95);
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            background: rgba(2, 12, 27, 0.98);
+            border-bottom: 1px solid var(--growth-green-soft);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
         }
 
         nav {
@@ -711,14 +711,12 @@
 
     <!-- JavaScript -->
     <script>
-        // Header Scroll Effect
+        // Header Scroll Effect (Improved with ScrollTrigger for reliability)
         const header = document.getElementById('site-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+        ScrollTrigger.create({
+            start: "top -50",
+            onEnter: () => header.classList.add('scrolled'),
+            onLeaveBack: () => header.classList.remove('scrolled'),
         });
 
         // Mobile Menu Toggle
