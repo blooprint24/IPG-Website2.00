@@ -22,25 +22,30 @@
 
     <style>
         :root {
-            /* Color Palette - Refined for IPG Logo */
-            --deep-blue: #0A192F;
-            --mid-blue: #112240;
-            --light-blue: #1E3A8A;
-            /* Slightly more vibrant blue */
+            /* Color Palette - Optimized for Light Mode */
             --growth-green: #409E1A;
             /* Logo Matched Green */
-            --growth-green-soft: rgba(64, 158, 26, 0.1);
-            --growth-green-bright: #52B527;
-            --text-main: #E2E8F0;
-            --text-dim: #94A3B8;
-            --white: #FFFFFF;
-            --bg-dark: #020617;
-            /* Deeper slate dark */
+            --growth-green-soft: rgba(64, 158, 26, 0.08);
+            --growth-green-bright: #3D9018;
 
-            /* Glassmorphism */
-            --glass-bg: rgba(15, 23, 42, 0.8);
-            --glass-border: rgba(16, 185, 129, 0.15);
-            --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+            --bg-dark: #FFFFFF;
+            /* Main background is now white */
+            --bg-secondary: #F8FAFC;
+            /* Light Slate for sections */
+
+            --heading-color: #0F172A;
+            /* Slate 900 for high trust */
+            --text-main: #334155;
+            /* Slate 700 for body text */
+            --text-dim: #64748B;
+            /* Slate 500 for secondary text */
+            --white: #FFFFFF;
+            /* Actual white */
+
+            /* Glassmorphism - Retuned for Light Mode */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(15, 23, 42, 0.1);
+            --glass-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.1);
 
             /* Typography */
             --font-heading: 'Outfit', sans-serif;
@@ -98,7 +103,7 @@
         h3,
         h4 {
             font-family: var(--font-heading);
-            color: var(--white);
+            color: var(--heading-color);
             line-height: 1.1;
             margin-bottom: 1.5rem;
         }
@@ -169,16 +174,16 @@
             /* Extremely high to stay above everything */
             transition: height 0.3s ease, background 0.3s ease;
             backdrop-filter: blur(10px);
-            background: rgba(2, 12, 27, 0.82);
+            background: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid transparent;
             will-change: transform, height;
         }
 
         header.scrolled {
             height: 70px;
-            background: rgba(2, 12, 27, 0.98);
-            border-bottom: 1px solid var(--growth-green-soft);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
         }
 
         nav {
@@ -296,7 +301,7 @@
 
         /* ROI Section */
         #roi {
-            background: rgba(17, 34, 64, 0.3);
+            background: var(--bg-secondary);
         }
 
         .grid-roi {
@@ -392,7 +397,8 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: var(--mid-blue);
+            background: var(--heading-color);
+            /* Kept dark for thumb accessibility */
             display: none;
             grid-template-columns: repeat(3, 1fr);
             border-top: 1px solid var(--growth-green);
@@ -408,10 +414,10 @@
         .mobile-cta-item {
             padding: 1rem;
             text-align: center;
-            color: var(--white);
+            color: #FFFFFF;
             text-decoration: none;
             font-size: 0.8rem;
-            border-right: 1px solid rgba(100, 255, 218, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Sticky Book Button */
@@ -570,19 +576,26 @@
                             <p>Most businesses lose money quietly through missed calls.</p>
                             <div style="display: flex; gap: 1rem; margin-top: 1rem;">
                                 <div style="flex: 1; text-align: center; border-right: 1px solid var(--glass-border);">
-                                    <span style="display: block; font-size: 1.5rem; color: var(--growth-green);"
+                                    <span
+                                        style="display: block; font-size: 1.5rem; color: var(--growth-green); font-weight: 700;"
                                         id="count-missed">0</span>
-                                    <span style="font-size: 0.7rem;">Missed/Day</span>
+                                    <span
+                                        style="font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;">Missed/Day</span>
                                 </div>
                                 <div style="flex: 1; text-align: center; border-right: 1px solid var(--glass-border);">
-                                    <span style="display: block; font-size: 1.5rem; color: var(--growth-green);"
+                                    <span
+                                        style="display: block; font-size: 1.5rem; color: var(--growth-green); font-weight: 700;"
                                         id="count-sale">$0</span>
-                                    <span style="font-size: 0.7rem;">Avg Sale</span>
+                                    <span
+                                        style="font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;">Avg
+                                        Sale</span>
                                 </div>
                                 <div style="flex: 1; text-align: center;">
-                                    <span style="display: block; font-size: 1.5rem; color: var(--growth-green);"
+                                    <span
+                                        style="display: block; font-size: 1.5rem; color: var(--growth-green); font-weight: 700;"
                                         id="count-win">0</span>
-                                    <span style="font-size: 0.7rem;">Win/Day</span>
+                                    <span
+                                        style="font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;">Win/Day</span>
                                 </div>
                             </div>
                         </div>
@@ -591,16 +604,16 @@
                             <div style="margin-top: 1rem;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                     <span>Daily Loss</span>
-                                    <span style="color: #FACC15;" id="count-daily">$0</span>
+                                    <span style="color: #B45309; font-weight: 600;" id="count-daily">$0</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                     <span>Monthly Loss</span>
-                                    <span style="color: #FACC15;" id="count-monthly">$0</span>
+                                    <span style="color: #B45309; font-weight: 600;" id="count-monthly">$0</span>
                                 </div>
                                 <div
                                     style="display: flex; justify-content: space-between; font-weight: bold; border-top: 1px solid var(--glass-border); padding-top: 0.5rem;">
                                     <span>Annual Loss</span>
-                                    <span style="color: #ff4d4d;" id="count-annual">$0</span>
+                                    <span style="color: #DC2626; font-weight: 700;" id="count-annual">$0</span>
                                 </div>
                             </div>
                         </div>
@@ -615,15 +628,19 @@
                                 <li style="margin-bottom: 0.5rem;">✓ Auto-Booking</li>
                                 <li>✓ Zero Leakage</li>
                             </ul>
-                            <p style="margin-top: 1.5rem; font-weight: bold; color: var(--white);">You're recovering
+                            <p style="margin-top: 1.5rem; font-weight: bold; color: var(--heading-color);">You're
+                                recovering
                                 money you're already losing.</p>
                         </div>
                         <div class="roi-card">
                             <h4>Cost vs Recovery</h4>
                             <div style="display: flex; gap: 1rem; margin-top: 1rem;">
                                 <div style="flex: 1;">
-                                    <span style="font-size: 0.7rem; display: block;">Friction Loss</span>
-                                    <span style="color: #ff4d4d; font-size: 1.2rem;" id="count-friction-loss">$0</span>
+                                    <span
+                                        style="font-size: 0.7rem; display: block; color: var(--text-dim); text-transform: uppercase;">Friction
+                                        Loss</span>
+                                    <span style="color: #DC2626; font-size: 1.25rem; font-weight: 700;"
+                                        id="count-friction-loss">$0</span>
                                 </div>
                                 <div style="flex: 1;">
                                     <span style="font-size: 0.7rem; display: block;">PDS Utility</span>
@@ -640,33 +657,38 @@
         <!-- Section 6: Risk Reversal -->
         <section id="try-it">
             <div class="container" style="text-align: center;">
-                <div class="roi-card" style="max-width: 800px; margin: 0 auto;">
+                <div class="roi-card"
+                    style="max-width: 800px; margin: 0 auto; background: var(--white); border-color: rgba(15, 23, 42, 0.05);">
                     <h2>Try the System for 15 Days</h2>
-                    <p style="font-size: 1.2rem; color: var(--white); margin-bottom: 2rem;">
+                    <p style="font-size: 1.2rem; color: var(--text-main); margin-bottom: 2rem;">
                         Pay only the <span
                             style="text-decoration: line-through; color: var(--text-dim); opacity: 0.6;">$800</span>
                         <strong style="color: var(--growth-green);">$67 setup fee<span
-                                style="color: #FACC15;">*</span></strong> to start.
-                        <br><span style="font-size: 0.9rem; color: #FACC15; opacity: 1;">* February
+                                style="color: var(--growth-green);">*</span></strong> to start.
+                        <br><span style="font-size: 0.9rem; color: var(--growth-green); opacity: 1; font-weight: 600;">*
+                            February
                             Special Only</span>
                     </p>
 
                     <div
                         style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; margin-bottom: 2rem;">
-                        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                        <div
+                            style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(15, 23, 42, 0.05);">
                             <h4 style="color: var(--growth-green); margin-bottom: 0.5rem;">The Setup Includes:</h4>
-                            <ul style="list-style: none; font-size: 0.9rem;">
+                            <ul style="list-style: none; font-size: 0.9rem; color: var(--text-main);">
                                 <li>✓ Professional Website</li>
                                 <li>✓ Business Phone Number (Listed in 411)</li>
                                 <li>✓ Website Chat Assistant</li>
                                 <li>✓ AI Agent to Answer Your Phone</li>
                             </ul>
                         </div>
-                        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                        <div
+                            style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(15, 23, 42, 0.05);">
                             <h4 style="color: var(--growth-green); margin-bottom: 0.5rem;">The Business In A Box
                                 Guarantee:
                             </h4>
-                            <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--white); line-height: 1.4;">Even
+                            <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--text-main); line-height: 1.4;">
+                                Even
                                 if you decide the full PDS automation isn't for you, you still walk away with a
                                 professional powerhouse.
                                 <br><br>Keep your entire Website, CRM, and Business Phone Number for just $67/mo.
