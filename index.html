@@ -333,7 +333,8 @@
                 background: var(--bg-dark);
                 flex-direction: column;
                 align-items: center;
-                padding-top: 4rem;
+                padding-top: 2rem;
+                /* Reduced from 4rem */
                 transform: translateX(100%);
                 transition: transform 0.3s ease-in-out;
                 z-index: 99;
@@ -345,11 +346,13 @@
             }
 
             .nav-links li {
-                margin-bottom: 2rem;
+                margin-bottom: 1.25rem;
+                /* Reduced from 2rem */
             }
 
             .nav-links a {
-                font-size: 1.5rem;
+                font-size: 1.25rem;
+                /* Reduced from 1.5rem */
             }
 
             .hamburger {
@@ -710,11 +713,37 @@
             hamburger.style.transform = navLinksGroup.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0deg)';
         });
 
-        // Close menu when a link is clicked
+        // Close menu and smooth scroll when a link is clicked
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navLinksGroup.classList.remove('active');
-                hamburger.style.transform = 'rotate(0deg)';
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+
+                    // Close menu
+                    navLinksGroup.classList.remove('active');
+                    hamburger.style.transform = 'rotate(0deg)';
+
+                    // Centered Scroll Logic
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const elementHeight = targetElement.offsetHeight;
+                        const viewportHeight = window.innerHeight;
+                        // Calculate offset to center the section, but don't go above the header
+                        let offset = (viewportHeight - elementHeight) / 2;
+                        if (offset < 0) offset = 0; // If section is taller than screen
+
+                        gsap.to(window, {
+                            duration: 1.2,
+                            scrollTo: {
+                                y: targetId,
+                                offsetY: offset > 0 ? offset : 70, // Slight buffer if not centered
+                                autoKill: false
+                            },
+                            ease: "power3.inOut"
+                        });
+                    }
+                }
             });
         });
 
