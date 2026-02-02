@@ -260,3 +260,16 @@ body {
   cursor: pointer;
   backdrop-filter: blur(10px);
 }
+
+/* Missing Utilities */
+.bg-black {
+  background-color: var(--bg-black);
+}
+
+.text-dim {
+  color: var(--text-dim);
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
