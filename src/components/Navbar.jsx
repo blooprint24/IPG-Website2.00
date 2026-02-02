@@ -3,7 +3,7 @@ import React from 'react';
 const Navbar = () => {
   return (
     <nav className="fixed w-full flex justify-center z-50 pt-4">
-      <div className="flex items-center justify-between w-full max-w-7xl px-8 py-2 glass rounded-full border-white/5">
+      <div className="flex items-center justify-between w-full max-w-7xl px-8 py-2 rounded-full" style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}>
         <div className="flex items-center gap-4">
           {/* Minimal IPG Logo */}
           <div style={{
