@@ -166,10 +166,19 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 100;
-            transition: all 0.3s ease;
+            z-index: 1000;
+            /* Increased to stay above everything */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
             background: rgba(2, 12, 27, 0.8);
+            border-bottom: 1px solid transparent;
+        }
+
+        header.scrolled {
+            height: 70px;
+            background: rgba(2, 12, 27, 0.95);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
         nav {
@@ -324,6 +333,10 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
+            :root {
+                --header-height: 75px;
+            }
+
             .nav-links {
                 position: fixed;
                 top: var(--header-height);
@@ -697,6 +710,16 @@
 
     <!-- JavaScript -->
     <script>
+        // Header Scroll Effect
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
         // Mobile Menu Toggle
         const hamburger = document.querySelector('.hamburger');
         const navLinksGroup = document.querySelector('.nav-links');
